@@ -46,7 +46,7 @@ const Chat = (props) => {
 
   return (
     <LinearGradient
-      colors={["#ff00ff", "#cc00cc", "#b000af"]}
+      colors={["#8B008B", "#cc00cc", "#ff00ff"]}
       style={styles.gradient}
     >
       <View style={styles.headerContainer}>
@@ -54,8 +54,9 @@ const Chat = (props) => {
         <Icon name="add" color="#fff" size={30} />
       </View>
       <ScrollView
+        horizontal
         style={styles.proContainer}
-        horizontalshowsHorizontalIndicator={false}
+        showsHorizontalScrollIndicator={false}
       >
         {loading ? (
           <ActivityIndicator size="small" color="#fff" />
@@ -65,19 +66,95 @@ const Chat = (props) => {
               <Profiles
                 key={item.id}
                 username={item.login}
-                uri={item.avatar_uri}
+                uri={item.avatar_url}
               />
             ))}
           </Animated.View>
         )}
       </ScrollView>
+      <View style={styles.ops}>
+        <View style={styles.col}>
+          <Text style={styles.day}>Sunday</Text>
+          <Entypo name="dots-three-horizontal" color="#000119" size={30} />
+        </View>
+        <ScrollView>
+          {loading ? (
+            <ActivityIndicator size="large" color="#8B008B" />
+          ) : (
+            <Animated.View style={[list.getLayout(), styles.list]}>
+              {data.map((item, index) => (
+                <Messages
+                  key={item.id}
+                  username={item.login}
+                  uri={item.avatar_url}
+                  count={Math.floor(Math.random() * 3)}
+                  onPress={() => {
+                    props.navigation.navigate("Discussion", {
+                      itemId: item.id,
+                      itemName: item.login,
+                      itemPic: item.avatar_url,
+                    });
+                  }}
+                />
+              ))}
+            </Animated.View>
+          )}
+        </ScrollView>
+      </View>
     </LinearGradient>
   );
 };
 export default Chat;
 
 const styles = StyleSheet.create({
+  list: {
+    marginTop: 300,
+  },
+  card: {
+    marginLeft: 400,
+    width: 400,
+    flexDirection: "row",
+  },
   gradient: {
     height: "100%",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    paddingHorizontal: 20,
+    paddingTop: 30,
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  header: {
+    fontFamily: "Montserrat_800ExtraBold",
+    color: "#fff",
+    flex: 1,
+    fontSize: 24,
+  },
+  proContainer: {
+    marginRight: 20,
+    alignSelf: "center",
+  },
+  ops: {
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    height: 500,
+    backgroundColor: "#fff",
+    marginHorizontal: -20,
+  },
+  col: {
+    flexDirection: "row",
+    marginTop: 25,
+    marginHorizontal: 20,
+    alignItems: "center",
+  },
+  day: {
+    fontFamily: "Montserrat_800ExtraBold",
+    color: "#000119",
+    flex: 1,
+    fontSize: 20,
   },
 });

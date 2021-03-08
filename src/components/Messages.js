@@ -1,6 +1,6 @@
-import { LinearGradient } from "expo";
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const randomTime = () => {
   const hrs = Math.round(Math.random() * 12);
@@ -8,7 +8,7 @@ const randomTime = () => {
   const hFormat = hrs < 10 ? "0" : "";
   const mFormat = mins < 10 ? "0" : "";
   const amPm = hrs < 12 ? "AM" : "PM";
-  return String(hFormat + hrs + ":" + mFormat + mins + "" + amPm);
+  return String(hFormat + hrs + ":" + mFormat + mins + " " + amPm);
 };
 
 const Messages = ({ username, uri, count, onPress }) => {
@@ -16,12 +16,13 @@ const Messages = ({ username, uri, count, onPress }) => {
     <TouchableOpacity onPress={onPress} style={styles.container}>
       {count > 0 ? (
         <LinearGradient
-          color={["#c10095", "#67004b", "#67004b"]}
+          colors={["#f26a50", "#f20045", "#f20045"]}
           style={styles.gradientStyle}
         >
           <Text style={styles.count}>{count}</Text>
         </LinearGradient>
       ) : null}
+
       <Image source={{ uri: uri }} style={styles.image} />
       <View style={{ marginLeft: 10 }}>
         <Text style={styles.username}>{username}</Text>
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
   },
-  username: {
+  text: {
     color: "#b6b6b6",
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 11,
@@ -69,5 +70,9 @@ const styles = StyleSheet.create({
     marginLeft: 280,
     position: "absolute",
     fontFamily: "Montserrat_600SemiBold",
+  },
+  username: {
+    color: "#000119",
+    fontFamily: "Montserrat_700Bold",
   },
 });
